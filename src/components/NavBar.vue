@@ -1,14 +1,14 @@
 <template>
-  <div class="">
+  <div class="container">
     <transition name="fade">
       <Notification :closeNoti="closeNoti" v-if="showtNotifi == true" />
     </transition>
     <nav id="navibar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
+      <div id="navi-item" class=" container-fluid">
         <a class="navbar-brand" href="/">Dev-How</a>
         <button
           id="navbar-mobile-button"
-          class=" navbar-toggler btn-nav collapsed"
+          class="navi-item navbar-toggler btn-nav collapsed"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarSupportedContent"
@@ -16,9 +16,9 @@
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span>---</span>
-          <span>---</span>
-          <span>---</span>
+          <span class="navi-item">---</span>
+          <span class="navi-item">---</span>
+          <span class="navi-item">---</span>
         </button>
         <div class="circleBase profile-div">
           <a href="/profile">
@@ -26,8 +26,30 @@
           </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div
+          class="navi-item collapse navbar-collapse"
+          id="navbarSupportedContent"
+        >
+          <ul
+            v-if="iflogin == false"
+            class="navi-item navbar-nav me-auto mb-2 mb-lg-0"
+          >
+            <li class="nav-item">
+              <a class="userbtn nav-link" href="/login">Login </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="userbtn nav-link"
+                @click="toogleSearch()"
+                href="/register"
+                >Register</a
+              >
+            </li>
+          </ul>
+          <ul
+            v-if="iflogin == true"
+            class="navi-item navbar-nav me-auto mb-2 mb-lg-0"
+          >
             <li class="nav-item">
               <a class="searchIcon nav-link" @click="toogleSearch()" href="#"
                 >Search <i id="searchIconToggle" class="fas fa-search"></i
@@ -35,47 +57,29 @@
             </li>
             <li class="nav-item">
               <a
-                class="nav-link"
+                class=" notifiIcon nav-link"
                 @click="closeNoti()"
                 aria-current="page"
                 href="#"
-                >Notification <i class="notifiIcon far fa-bell"></i
+                >Notification <i class=" far fa-bell"></i
               ></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" @click="togleModal()">
-               New post <i class="fa fa-plus"></i
+              <a class="newPostIcon nav-link" href="/newpost">
+                New post <i class="fa fa-plus"></i
               ></a>
+            </li>
+            <li class="nav-item">
+              <a class="settingsIcon nav-link" href="/settings">
+                Settings
+                <i class="fas fa-sliders-h"></i>
+              </a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- modal -->
-    <transition name="fade">
-      <div id="myModal" class="modal" name="modal">
-        <div class="modal-dialog" role="document">
-          <div class=" modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Add Post</h5>
-            </div>
-            <div class="modal-body"></div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-dark">post</button>
-              <button
-                type="button"
-                class="btn btn-danger"
-                @click="togleModal()"
-                data-dismiss="modal"
-              >
-                cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
     <div v-if="showSearch == true">
       <form class="form-inline my-2 my-lg-0">
         <div class="input-group mb-3">
@@ -90,7 +94,7 @@
             class="btn search-btn btn-success"
             type="button"
             id="button-addon2"
-          > 
+          >
             <i class=" fa fa-search"></i>
           </button>
         </div>
@@ -107,29 +111,17 @@ export default {
   },
   data() {
     return {
+      showModal: false,
       showtNotifi: false,
       showSearch: false,
+      iflogin: true,
     };
   },
   methods: {
-    togleModal() {
-      const modal = document.getElementById("myModal");
-      if (modal.style.display == "block") {
-        this.showtNotifi = false;
-        this.showSearch = false;
-        document.getElementById("post-section").style.display = "block";
-        document.getElementById("navibar").style.display = "flex";
-        modal.style.display = "none";
-      } else {
-        modal.style.display = "block";
-        document.getElementById("navbar-mobile-button").click();
-        document.getElementById("post-section").style.display = "none";
-        document.getElementById("navibar").style.display = "none";
-      }
-    },
+ 
     closeNoti() {
       if (this.showtNotifi == false) {
-        document.getElementById("myModal").style.display = "none";
+        this.showModal = false;
         this.showSearch = false;
         document.getElementById("navbar-mobile-button").click();
         document.getElementById("post-section").style.display = "none";
@@ -143,7 +135,7 @@ export default {
     },
     toogleSearch() {
       if (this.showSearch == false) {
-        document.getElementById("myModal").style.display = "none";
+        this.showModal = false;
         this.showtNotifi = false;
         this.showSearch = true;
         document.getElementById("searchIconToggle").className =
@@ -162,11 +154,52 @@ export default {
 };
 </script>
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+.userbtn {
+  border: 3px solid black;
+  background-color: transparent;
+  border-radius: 15px;
+  margin-left: 15px !important;
+}
+.userbtn:hover {
+  color: darkgreen !important;
+  border: 3px solid darkgreen;
+}
+.settingsIcon {
+  text-decoration: none;
+  color: #fafafa;
+  border: 1px solid transparent;
+  border-radius: 15px;
+}
+.settingsIcon:hover {
+  border: 1px solid darkgreen;
+}
+.newPostIcon {
+  text-decoration: none;
+  color: #fafafa;
+  border: 1px solid transparent;
+  border-radius: 15px;
+}
+.newPostIcon:hover {
+  border: 1px solid darkgreen;
+}
 .searchIcon {
   text-decoration: none;
   color: #fafafa;
+  border: 1px solid transparent;
+  border-radius: 15px;
 }
+.searchIcon:hover {
+  border: 1px solid darkgreen !important;
+}
+.notifiIcon {
+  border: 1px solid transparent !important;
+  border-radius: 15px;
+}
+.notifiIcon:hover {
+  border: 1px solid darkgreen !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
@@ -191,7 +224,7 @@ export default {
   width: 80%;
 }
 .modal {
-  display: none;
+  display: block;
   position: fixed;
   z-index: 9999999;
   left: 0;
@@ -249,7 +282,7 @@ nav {
 }
 .navbar-brand {
   font-size: 35px;
-  font-family: 'VT323', monospace;
+  font-family: "VT323", monospace;
   order: 1;
 }
 .navbar-toggler {

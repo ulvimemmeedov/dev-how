@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^29.1.0",
+    "@ckeditor/ckeditor5-code-block": "^29.1.0",
     "@ckeditor/ckeditor5-vue": "^2.0.1",
+    "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/vue-fontawesome": "^2.0.2",
     "@popperjs/core": "^2.9.3",

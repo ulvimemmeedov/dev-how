@@ -3,7 +3,11 @@ import Home from './components/Home';
 import NotFound from './components/NotFound';
 import Profile from './components/Profile';
 import Lists from './components/Lists';
-import Article from './components/ArticleSingle'
+import Article from './components/ArticleSingle';
+import Login from './components/Login';
+import Register from './components/Register'
+import Settings from './components/Settings'
+import Editor from './components/Editor'
 const router = new VueRouter({
     routes: [
         {
@@ -33,6 +37,23 @@ const router = new VueRouter({
         {
             path: '/article',
             component: Article,
+        },
+        {
+            path: '/login',
+            component: Login,
+        },
+        {
+            path: '/register',
+            component: Register,
+        },
+        {
+            path: '/settings',
+            component: Settings,
+        },
+        
+        {
+            path: '/newpost',
+            component: Editor,
         },
         {
             path: '/*',

@@ -36,6 +36,7 @@ export default {
   font-size: 20px;
   text-decoration: none;
   margin-top: 2px;
+  margin-left: 67%;
 }
 .card-body{
     margin-top:5px ;
@@ -63,6 +64,7 @@ export default {
       position: relative;
       left: 40%;
       bottom: 119%;
+      margin-left: 0;
   }
   .notifi-section {
   margin: 0;
