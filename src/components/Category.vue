@@ -46,7 +46,6 @@ export default {
   data() {
     return {
       settings: {
-        
         dots: true,
         infinite: false,
         initialSlide: 2,
@@ -60,9 +59,15 @@ export default {
 };
 </script>
 <style scoped>
+
 .sliderCatHeading {
   color: #fafafa;
 }
+
+.topics:hover {
+  border: 2px solid darkgreen;
+}
+
 .topics-div-span {
   padding: 5px;
   height: 100%;
@@ -76,7 +81,7 @@ export default {
 }
 .topics-div {
   margin-left: 25px;
-  padding: 5px;
+  padding: 10px;
   height: 100%;
   align-items: center;
   background-color: transparent;
@@ -84,11 +89,11 @@ export default {
 
 @media (max-width: 880px) {
   .topics-div {
-  margin: 5px;
-  padding:0 55px 0 55px;
-  height: 100%;
-  align-items: center;
-  background-color: transparent;
-}
+    margin: 5px;
+    padding: 0 55px 0 55px;
+    height: 100%;
+    align-items: center;
+    background-color: transparent;
+  }
 }
 </style>

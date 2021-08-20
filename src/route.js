@@ -5,9 +5,12 @@ import Profile from './components/Profile';
 import Lists from './components/Lists';
 import Article from './components/ArticleSingle';
 import Login from './components/Login';
-import Register from './components/Register'
-import Settings from './components/Settings'
-import Editor from './components/Editor'
+import Register from './components/Register';
+import Settings from './components/Settings';
+import Editor from './components/Editor';
+import PasswordReset from './components/PasswordReset';
+import Notification from "./components/Notifications";
+
 const router = new VueRouter({
     routes: [
         {
@@ -17,18 +20,7 @@ const router = new VueRouter({
         {
             path: '/profile',
             component: Profile,
-            props: {
-                user:
-                    {
-                        username:"ulvimemmeedov",
-                        followers:"555",
-                        following:"44",
-                        posts:"159",
-                        bio:
-                        "limit 113 Lorem elit. dicta ratione sapiente. Modi ea namdignissimos doloremque repellendus sint quasi saepe odio",
-                        notification:[]
-                    }
-            }
+            
         },
         {
             path: '/list',
@@ -54,6 +46,14 @@ const router = new VueRouter({
         {
             path: '/newpost',
             component: Editor,
+        },
+        {
+            path: '/passwordreset',
+            component: PasswordReset,
+        },
+        {
+            path: '/notification',
+            component: Notification,
         },
         {
             path: '/*',

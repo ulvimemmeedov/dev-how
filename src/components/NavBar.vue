@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <transition name="fade">
-      <Notification :closeNoti="closeNoti" v-if="showtNotifi == true" />
-    </transition>
+
     <nav id="navibar" class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div id="navi-item" class=" container-fluid">
         <a class="navbar-brand" href="/">Dev-How</a>
@@ -20,7 +18,7 @@
           <span class="navi-item">---</span>
           <span class="navi-item">---</span>
         </button>
-        <div class="circleBase profile-div">
+        <div v-if="this.token" class="circleBase profile-div">
           <a href="/profile">
             <img src="../assets/logo.png" alt="profile photo navbar" />
           </a>
@@ -30,52 +28,50 @@
           class="navi-item collapse navbar-collapse"
           id="navbarSupportedContent"
         >
-          <ul
-            v-if="iflogin == false"
-            class="navi-item navbar-nav me-auto mb-2 mb-lg-0"
-          >
-            <li class="nav-item">
-              <a class="userbtn nav-link" href="/login">Login </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="userbtn nav-link"
-                @click="toogleSearch()"
-                href="/register"
-                >Register</a
-              >
-            </li>
-          </ul>
-          <ul
-            v-if="iflogin == true"
-            class="navi-item navbar-nav me-auto mb-2 mb-lg-0"
-          >
+        <ul v-if="this.token" class="navi-item navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="searchIcon nav-link" @click="toogleSearch()" href="#"
-                >Search <i id="searchIconToggle" class="fas fa-search"></i
-              ></a>
+                ><i id="searchIconToggle" class="fas fa-search"></i> Search</a
+              >
             </li>
             <li class="nav-item">
               <a
                 class=" notifiIcon nav-link"
-                @click="closeNoti()"
                 aria-current="page"
-                href="#"
-                >Notification <i class=" far fa-bell"></i
-              ></a>
+                href="/notification"
+                ><i class=" far fa-bell"></i> Notification
+              </a>
             </li>
             <li class="nav-item">
               <a class="newPostIcon nav-link" href="/newpost">
-                New post <i class="fa fa-plus"></i
-              ></a>
+                <i class="fa fa-plus"></i> New post
+              </a>
             </li>
             <li class="nav-item">
               <a class="settingsIcon nav-link" href="/settings">
-                Settings
-                <i class="fas fa-sliders-h"></i>
-              </a>
+                <i class="fas fa-sliders-h"></i> Settings</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                title="log out"
+                class="settingsIcon nav-link"
+                @click="logout()"
+                href="#"
+              >
+                <i class="fas fa-sign-out-alt"></i> {{ this.user.username }}</a
+              >
             </li>
           </ul>
+          <ul v-else class="navi-item navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="userbtn nav-link" href="/login">Login </a>
+            </li>
+            <li class="nav-item">
+              <a class="userbtn nav-link" href="/register">Register</a>
+            </li>
+          </ul>
+          
         </div>
       </div>
     </nav>
@@ -85,16 +81,12 @@
         <div class="input-group mb-3">
           <input
             type="text"
-            class="form-control"
+            class="search-from form-control"
             placeholder="Recipient's username"
             aria-label="Recipient's username"
             aria-describedby="button-addon2"
           />
-          <button
-            class="btn search-btn btn-success"
-            type="button"
-            id="button-addon2"
-          >
+          <button class="btn search-btn" type="button" id="button-addon2">
             <i class=" fa fa-search"></i>
           </button>
         </div>
@@ -103,40 +95,26 @@
   </div>
 </template>
 <script>
-import Notification from "./Notifications.vue";
-
+import {mapState} from 'vuex'
 export default {
-  components: {
-    Notification,
+  computed:
+  {
+    ...mapState(['token']),
+    ...mapState(['user'])
   },
   data() {
     return {
       showModal: false,
-      showtNotifi: false,
       showSearch: false,
-      iflogin: true,
+     
+    
     };
   },
+
   methods: {
- 
-    closeNoti() {
-      if (this.showtNotifi == false) {
-        this.showModal = false;
-        this.showSearch = false;
-        document.getElementById("navbar-mobile-button").click();
-        document.getElementById("post-section").style.display = "none";
-        document.getElementById("navibar").style.display = "none";
-        this.showtNotifi = true;
-      } else {
-        document.getElementById("post-section").style.display = "block";
-        document.getElementById("navibar").style.display = "flex";
-        this.showtNotifi = false;
-      }
-    },
     toogleSearch() {
       if (this.showSearch == false) {
         this.showModal = false;
-        this.showtNotifi = false;
         this.showSearch = true;
         document.getElementById("searchIconToggle").className =
           "searchIconToggle far fa-times-circle";
@@ -150,11 +128,35 @@ export default {
         this.showSearch = false;
       }
     },
+    logout() {
+      localStorage.removeItem("token");
+      location.reload();
+    },
   },
 };
 </script>
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
+.search-from {
+  margin-top: 5px;
+}
+.input-group {
+  align-items: center !important;
+}
+.search-btn {
+  opacity: 0.4;
+  color: #fafafa;
+  border: 1px solid #000;
+  background: transparent;
+  border-radius: 25px;
+  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.search-btn:hover {
+  opacity: 0.9;
+  color: #fafafa;
+  border: 1px solid darkgreen;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);
+}
 .userbtn {
   border: 3px solid black;
   background-color: transparent;

@@ -58,7 +58,12 @@
 export default {
   data(){
     return{
-      showSuccess:false
+      showSuccess:false,
+      username:'',
+      email:'',
+      pass:'',
+      fullname:'',
+      
     }
   },
   methods:{
@@ -80,39 +85,19 @@ export default {
   border-radius: 55px;
 }
 .btn-login {
+  opacity: 0.3;
   margin-top: 15px;
-  border: 2px solid #000;
+  border: 1px solid #000;
   background: transparent;
   border-radius: 25px;
   box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
     0 17px 50px 0 rgba(0, 0, 0, 0.19);
 }
 .btn-login:hover {
-  color: #5cb85c;
+  opacity: 0.9;
+  color: #fafafa;
+  border: 1px solid darkgreen;
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 6px 0 rgba(0, 0, 0, 0.19);
 }
-::placeholder {
-  color: #000;
-}
-::-webkit-input-placeholder {
-  color: #000;
-}
-:-moz-placeholder {
-  color: #000;
-}
-::-moz-placeholder {
-  color: #000;
-}
-:-ms-input-placeholder {
-  color: #000;
-}
-input[type="text"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-}
-input:focus {
-  border: 2px solid #5cb85c;
-}
+
 </style>

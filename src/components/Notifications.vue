@@ -2,20 +2,20 @@
   <div class="container">
     <div class="notifi d">
       <div class="row">
-        <div class="col-md"></div>
-        <div class="col-md">
-          <h4 class="d-inline-block notifiHeading">Nofitications <span class="notificaton-count">5</span> </h4>
+       
+        <div class=" d-flex flex-column">
+          <h4 class="d-inline-block notifiHeading">Nofitications <div class="notificaton-count">{{ this.token ? this.notifications.length : 0 }}</div> </h4>
         </div>
-        <div class="col-md">
-          <a class="close far fa-times-circle" href="#" @click="closeNoti"></a>
-        </div>
+        
       </div>
-      <div class="notifi-section">
+      <div v-if="this.token" class="notifi-section">
         <!-- notifications -->
-        <div class="card notifications">
+        <div v-for="notifie of this.notifications" :key="notifie.id" class="card notifications">
+          <h5 class="h1Notifi">{{notifie.title}}</h5>
           <div class="card-body">
-            Articleda bug tapildi.
+            {{notifie.des}}
           </div> 
+          <span>{{notifie.createdAt.split("T")[1].slice(0,5) +' '+notifie.createdAt.split("T")[0]}}</span>
         </div>
         <!--  -->
          <hr>
@@ -24,19 +24,27 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
+
 export default {
-  props: {
-    closeNoti: Function,
-  },
+  computed: {
+    ...mapState(["notifications"]),
+    ...mapState(['token'])
+
+  }
 };
 </script>
 <style scoped>
-.close {
-  color: #000;
+.h1Notifi{
+  margin-top: 5px;
+}
+.notificaton-count{
+  border: 3px dotted darkgreen;
+  display: inline-block;
+  padding:4px;
+  border-radius: 205px;
+  width: 40px;
   font-size: 20px;
-  text-decoration: none;
-  margin-top: 2px;
-  margin-left: 67%;
 }
 .card-body{
     margin-top:5px ;

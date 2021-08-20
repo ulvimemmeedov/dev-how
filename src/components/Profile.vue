@@ -1,7 +1,7 @@
 <template>
   <div id="post-section" class="container">
     <!-- main -->
-    <div id="main" class="main">
+    <div v-if="this.token == true" id="main" class="main">
       <div class="profile-header">
         <div class="profile-photo">
           <div class="circleBase profile-div">
@@ -17,7 +17,7 @@
       <div class="container d-flex justify-content-around">
         <div class="profile-des-section">
           <span
-            ><span class="profile-des-section-span"
+            ><span class="profile-des-section-span-no-click"
               >{{ user.posts }} posts</span
             >
           </span>
@@ -45,22 +45,24 @@
     </div>
     <div class="post-section container">
       <!-- posts -->
-      <div class="w-33 position-relative">
+      <div v-for="post of this.posts" :key="post.id" class="w-33 position-relative">
         <div class="squared pt-100">
           <div class="squared_resize">
             <div class="box">
               <div class="profile-section-img-div">
                 <img
                   class="profile-post-img"
-                  src="../assets/posts.jpg"
-                  alt="profile menu posts"
+                  :src="post.img"
+                  :alt="post.title"
                 />
               </div>
               <div class="profile-section-h1-div">
                 <div class="profile-div-section-h1-div-2">
                   <h1 class="">
-                    <a class="h122 d-inline-block text-decoration-none" href="/article"
-                      >dustur</a
+                    <a
+                      class="h122 d-inline-block text-decoration-none"
+                      href="/article"
+                      >{{ post.title }}</a
                     >
                   </h1>
                 </div>
@@ -70,33 +72,49 @@
         </div>
       </div>
       <!--  -->
-
+    </div>
+    <div class="log" v-if="this.token == false" >
+      <h1><a class="a" href="/login">Go login</a></h1>
     </div>
   </div>
 </template>
 <script>
 import Lists from "./Lists.vue";
+import { mapState } from "vuex";
 
 export default {
-  components: {
-    Lists
+  computed: {
+        ...mapState(["token"]),
+    ...mapState(["user"]),
+    ...mapState(["posts"]),
   },
-  props: {
-    user: Object,
+  components: {
+    Lists,
   },
   data() {
     return {
       showList: false,
+      
     };
-  },
-
+  }
 };
 </script>
 <style scoped>
+.log{
+  margin-top:50%;
+}
+.a{
+  text-decoration: none;
+  color: #fafafa;
+}
 @media (max-width: 880px) {
   .profile-des-section {
     margin: 0 !important;
     padding: 10px !important;
+  }
+  .profile-des-section-span-no-click {
+    font-size: 15px !important;
+    margin: 3px !important;
   }
   .profile-des-section-span {
     font-size: 15px !important;
@@ -120,8 +138,25 @@ export default {
     height: 80px !important;
   }
 }
+.profile-des-section-span-no-click:hover {
+  color: darkgreen;
+}
+.profile-des-section-span:hover {
+  color: darkgreen;
+}
+.w-33:hover {
+  width: calc(calc(100% / 2) - 30px);
+  margin: 15px;
+  border: 1px solid darkgreen;
+  border-radius: 30px;
+}
 .h122 {
-  color: #fafafa;
+  margin-top: 1%;
+  color: white;
+  display: inline-block;
+}
+.h122:hover {
+  color: darkgreen;
 }
 .profile-post-img {
   width: 100%;

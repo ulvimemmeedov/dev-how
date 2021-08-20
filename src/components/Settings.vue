@@ -9,12 +9,14 @@
                 <div class="user-avatar">
                   <img src="../assets/logo.png" alt="Maxwell Admin" />
                 </div>
-                <h5 class="user-name">Ulvi Memmeedov</h5>
-                <h6 class="user-email">ulvim0@yandex.com</h6>
+                <h5 class="user-name">{{this.user.username}}</h5>
+                <h6 class="user-email">{{this.user.email}}</h6>
               </div>
               <div class="about">
                 <h5 class="mb-2">biography</h5>
                 <p>
+                  this.user.bio
+                  <br>
                   I'm Ulvi. Full Stack Developer I enjoy coding.
                 </p>
               </div>
@@ -36,7 +38,7 @@
                     type="text"
                     class="form-control"
                     id="fullName"
-                    placeholder="Enter full name"
+                    :placeholder="this.user.fullName"
                   />
                 </div>
               </div>
@@ -47,7 +49,7 @@
                     type="email"
                     class="form-control"
                     id="eMail"
-                    placeholder="Enter email"
+                    :placeholder="this.user.email"
                   />
                 </div>
               </div>
@@ -106,12 +108,16 @@
   </div>
 </template>
 <script>
+import {mapState} from 'vuex'
 export default {
+  computed:
+  {
+    ...mapState(['user'])
+  },
   mounted() {
     const elementArr = Array.from(document.getElementsByClassName("navi-item"));
     elementArr.forEach(element=>{
         element.style.display = "none"
-        console.log(element.style.display);
     })
   },
 };
